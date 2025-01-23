@@ -17,7 +17,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 
 fun saveThemePreference(context: Context, isDarkMode: Boolean){
     CoroutineScope(Dispatchers.IO).launch{
-        val themeKey = booleanPreferencesKey("dark_mode")
+        val themeKey = booleanPreferencesKey("dark_mode")///intPreferencesKey, stringPreferencesKey, floatPreferencesKey, doublePreferencesKey
         context.dataStore.edit { preferences ->
             preferences[themeKey] = isDarkMode
         }
@@ -26,5 +26,6 @@ fun saveThemePreference(context: Context, isDarkMode: Boolean){
 fun getThemePreference(context: Context): Flow<Boolean> {
         val themeKey = booleanPreferencesKey("dark_mode")
     return context.dataStore.data
-        .map{ preferences -> preferences[themeKey]?:false }
+        .map{ preferences -> preferences[themeKey]?: false
+        }
 }
